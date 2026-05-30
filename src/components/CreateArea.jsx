@@ -39,7 +39,7 @@ function CreateArea( { note, functions } ) {
           rows="3"
         />
         <div>
-          <button onClick={submitNote}>Add</button>
+          <button onClick={submitNote}>Save</button>
           <button onClick={clearNote}>Clear</button>
           <button onClick={deleteAllNotes}>Delete all</button>
         </div>
