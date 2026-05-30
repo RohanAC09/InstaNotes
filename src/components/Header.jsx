@@ -4,7 +4,6 @@ function Header(props) {
   return (
     <header>
       <h1>InstaNotes</h1>
-      <div></div>
       <button onClick={props.onDownloadPDF}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
