@@ -5,11 +5,40 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
+  const defaultNote = {
+    title: "",
+    content: ""
+  };
+  const [note, setNote] = useState(defaultNote);
   const [notes, setNotes] = useState([]);
 
-  function addNote(newNote) {
+  function updateInputField({ name, value }) {
+    setNote( (currentNote) => ({ ...currentNote, [name]: value }));
+  }
+
+  function addNote() {
     setNotes(prevNotes => {
-      return [...prevNotes, newNote];
+      return [...prevNotes, note];
+    });
+    setNote(defaultNote);
+  }
+
+  function clearNote() {
+    setNote(defaultNote);
+  }
+
+  function deleteAllNotes() {
+    setNotes([]);
+    setNote(defaultNote);
+  }
+
+  function editNote(id) {
+    const currentNote = notes.find((noteItem, index) => index === id);
+    setNote(currentNote);
+    setNotes(prevNotes => {
+      return prevNotes.filter((noteItem, index) => {
+        return index !== id;
+      });
     });
   }
 
@@ -21,10 +50,17 @@ function App() {
     });
   }
 
+  const inputFunctions = {
+    onUpdateInputField: updateInputField,
+    onAdd: addNote,
+    onClearNote: clearNote,
+    onDeleteAll: deleteAllNotes
+  }
+
   return (
     <div>
       <Header />
-      <CreateArea onAdd={addNote} />
+      <CreateArea note={note} functions={inputFunctions} />
       {notes.map((noteItem, index) => {
         return (
           <Note
@@ -32,6 +68,7 @@ function App() {
             id={index}
             title={noteItem.title}
             content={noteItem.content}
+            onEdit={editNote}
             onDelete={deleteNote}
           />
         );
